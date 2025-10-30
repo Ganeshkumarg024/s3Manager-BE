@@ -372,39 +372,10 @@ GET /api/v1/audit/stats
 Authorization: Bearer <token>
 ```
 
-## 🔧 Configuration
-
-### Application Properties
-
-Key configurations in `application.yml`:
-
-```yaml
-spring:
-  datasource:
-    hikari:
-      maximum-pool-size: 10
-      minimum-idle: 5
-  
-  servlet:
-    multipart:
-      max-file-size: 500MB
-      max-request-size: 500MB
-
-app:
-  security:
-    jwt:
-      expiration: 86400000  # 24 hours
-  
-  s3:
-    presigned-url-expiration: 3600  # 1 hour
-    max
 
 
 
 
-
-### Thanks
----
 
 <div align="center">
 
@@ -413,3 +384,9 @@ app:
 Made with ❤️ by [Ganesh Kumar](https://github.com/Ganeshkumarg024)
 
 </div>
+
+
+
+
+
+
