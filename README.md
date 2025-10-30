@@ -398,3 +398,15 @@ app:
   s3:
     presigned-url-expiration: 3600  # 1 hour
     max
+
+
+
+
+
+<div align="center">
+
+**⭐ Star this repo if you find it helpful!**
+
+Made with ❤️ by [Ganesh Kumar](https://github.com/Ganeshkumarg024)
+
+</div>
