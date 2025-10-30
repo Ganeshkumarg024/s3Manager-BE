@@ -1,0 +1,116 @@
+spring:
+  application:
+    name: s3-manager
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:s3manager}
+    username: ${DB_USER:adsuser}
+    password: ${DB_PASSWORD:AdS@3421}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 500MB
+      max-request-size: 500MB
+      file-size-threshold: 2MB
+
+server:
+  port: ${SERVER_PORT:9999}
+  error:
+    include-message: always
+    include-binding-errors: always
+  compression:
+    enabled: true
+  http2:
+    enabled: true
+
+# Application Configuration
+app:
+  name: S3 Manager
+  version: 1.0.0
+
+  security:
+    jwt:
+      secret: ${JWT_SECRET:R5ftzUqiEJoJOYhnaZxPcC7wVwRj/M/yjWgEBkLMeEvmYF+M31bIMwctflkpFEfQUupxVooj5jzWzYILNxTcGg==}
+      expiration: ${JWT_EXPIRATION:86400000} # 24 hours
+      refresh-expiration: ${JWT_REFRESH_EXPIRATION:604800000} # 7 days
+
+    cors:
+      allowed-origins: ${CORS_ORIGINS:http://localhost:3000,http://localhost:5173}
+      allowed-methods: GET,POST,PUT,DELETE,OPTIONS,PATCH
+      allowed-headers: "*"
+      allow-credentials: true
+      max-age: 3600
+
+  s3:
+    presigned-url-expiration: ${PRESIGNED_URL_EXPIRATION:3600} # 1 hour
+    max-upload-size: ${MAX_UPLOAD_SIZE:524288000} # 500MB
+    chunk-size: ${CHUNK_SIZE:5242880} # 5MB
+
+  audit:
+    enabled: true
+    retention-days: 90
+
+  analytics:
+    cache-ttl: 300 # 5 minutes
+    refresh-interval: 600 # 10 minutes
+
+# Encryption
+jasypt:
+  encryptor:
+    password: ${JASYPT_PASSWORD:changeme-encryption-password}
+    algorithm: PBEWITHHMACSHA512ANDAES_256
+    iv-generator-classname: org.jasypt.iv.RandomIvGenerator
+
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+# Logging
+logging:
+  level:
+    root: INFO
+    com.s3manager: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    software.amazon.awssdk: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/s3-manager.log
+    max-size: 10MB
+    max-history: 30
