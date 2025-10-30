@@ -360,6 +360,13 @@ Response:
 
 ### Audit Endpoints
 
+#### Login with hosted
+```http
+Admin
+Admin@3421
+Dont save value in here clone it use in local for your safety
+```
+
 #### Get Audit Logs
 ```http
 GET /api/v1/audit/logs?page=0&size=20&action=UPLOAD_OBJECT
@@ -373,8 +380,6 @@ Authorization: Bearer <token>
 ```
 
 
-https://s3manager-nmt9.onrender.com/dashboard
-Create Account and dont store AWS key on this one use clone it use it in local
 
 
 
