@@ -373,6 +373,9 @@ Authorization: Bearer <token>
 ```
 
 
+https://s3manager-nmt9.onrender.com/dashboard
+Create Account and dont store AWS key on this one use clone it use it in local
+
 
 
 
